@@ -1,0 +1,26 @@
+.menu {
+    background-color: #333; /* Color de fondo del menú */
+}
+
+.menu_desorden {
+    list-style-type: none; /* Eliminar viñetas de la lista */
+    margin: 0;
+    padding: 0;
+}
+
+.menu_list {
+    display: inline-block; /* Hacer que los elementos de la lista estén en línea */
+}
+
+.menu_enlace {
+    display: block;
+    color: white; /* Color del texto */
+    text-align: center; /* Centrar el texto */
+    padding: 14px 16px; /* Espaciado interno */
+    text-decoration: none; /* Eliminar subrayado del enlace */
+}
+
+/* Cambiar estilo de enlace al pasar el mouse */
+.menu_enlace:hover {
+    background-color: #555;
+}
