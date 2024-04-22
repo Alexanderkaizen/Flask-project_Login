@@ -13,10 +13,11 @@ body {
 .titulo-principal {
   margin-top: 10%;
   margin-bottom: 1%;
-}
+} 
 
 .titulo {
   text-align: center;
+  margin-bottom: 2rem;
 }
 
 form {
@@ -28,7 +29,51 @@ form {
   border: none;
   background-color: #151313;
   padding: 8px;
-  width: 70px;
+  width: 90px;
   color: #ffffff;
   border-radius: 10%;
+   border-top-right-radius: 40px 40px;
+  border-top-left-radius: 40px 40px;
+  border-bottom-left-radius: 40px 40px;
+  border-bottom-right-radius: 40px 40px;
+}
+
+.acessar:hover{
+
+  background-color: #151313;
+  opacity: 0.5;
+  
+
+}
+
+.form_img{
+margin-left: 90px;
+margin-bottom: 50px;
+width: 100px;
+height: 100px;
+
+}
+
+.form_total {
+
+
+  background-color: #ffffff;
+  padding: 100px;
+  width: 30vmax;
+  margin-top: 40px;
+  margin-left: 550px;
+  border-radius: 20px;
+  border: black 5px solid;
+
+}
+
+
+input{
+
+  border-top-right-radius: 40px 40px;
+  border-top-left-radius: 40px 40px;
+  border-bottom-left-radius: 40px 40px;
+  border-bottom-right-radius: 40px 40px;
+  width: 15rem;
+  height: 30px;
 }

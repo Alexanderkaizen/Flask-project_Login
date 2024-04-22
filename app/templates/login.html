@@ -11,23 +11,38 @@
   <header>
     <nav class="menu">
         <ul class="menu_desorden">
-            <li class="menu_list"><a class="menu_enlace" href="http://127.0.0.1:5000/">menu</a></li>
-            <li class="menu_list"><a class="menu_enlace" href="http://127.0.0.1:5000/registro">registro</a></li>
+            <li class="menu_list"><a class="menu_enlace" href="http://127.0.0.1:5000/">Menu</a></li>
+            <li class="menu_list"><a class="menu_enlace" href="http://127.0.0.1:5000/register">Registro</a></li>
         </ul>
     </nav>
 </header>
 
-  <div class="titulo-principal">
-    <h1 class="titulo">Login</h1>
+<div class="form_total">
+    
+  <img src="../static/img/Flask.png" class="form_img" alt="">
+
+
+    <div class="titulo-principal">
+      <h1 class="titulo">Login</h1>
+    </div>
+    <div class="formulario">
+      <form action="/login" method="post">
+        <label for="fullname">Nombre:</label><br>
+        <input type="text" id="fullname" name="fullname"><br>
+        <label for="password">Contraseña:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input class="acessar" type="submit" value="Acceder">
+      </form>
+    </div>
   </div>
-  <div class="formulario">
-    <form action="" method="post">
-      <label for="email">E-mail:</label><br>
-      <input type="email" id="email" name="email"><br>
-      <label for="password">Contraseña:</label><br>
-      <input type="password" id="password" name="password"><br><br>
-      <input class="acessar" type="submit" value="Acceder">
-    </form>
-  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    if (error) {
+      alert("Error: " + error);
+    }
+  </script>
+
 </body>
 </html>
