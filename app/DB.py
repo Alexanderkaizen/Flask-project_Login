@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # Función para conectarse a la base de datos
 def connect_db():
-    conn = sqlite3.connect('static/db/appDB.db')
+    conn = sqlite3.connect('app/static/db/appDB.db')
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -31,7 +31,6 @@ def index():
 def mostrar_formulario_registro():
     return render_template('registro.html')
 
-# Función para enviar el registro a la base de datos
 @app.route('/registro', methods=['POST'])
 def agregar_registro():
     if request.method == 'POST':
@@ -41,12 +40,19 @@ def agregar_registro():
 
         conn = connect_db()
         cursor = conn.cursor()
-        cursor.execute('''INSERT INTO usuarios (nombre, email, contraseña) 
-                        VALUES (?, ?, ?)''', (nombre, email, contraseña))
-        conn.commit()
-        conn.close()
+        cursor.execute("SELECT * FROM usuarios WHERE nombre = ? AND email = ? AND contraseña = ?", (nombre, email, contraseña))
+        validacion = cursor.fetchone()
 
-        return jsonify({'mensaje': 'Registro agregado exitosamente'}), 201
+        if validacion:
+         return redirect(url_for("mostrar_formulario_registro", error= "Esta cuenta ya se encuentra"))
+        else:
+            cursor.execute("INSERT INTO usuarios (nombre, email, contraseña) VALUES (?,?,?)", [nombre, email, contraseña])
+            conn.commit()
+            conn.close()
+
+        return redirect(url_for('mostrar_formulario_login'))
+
+
     
     
 # Ruta para mostrar el formulario de login
@@ -70,7 +76,10 @@ def iniciar_sesion():
         if usuario:
             return redirect(url_for('exito'))
         else:
-            return redirect(url_for('mostrar_formulario_login', error='Nombre de usuario o contraseña incorrectos'))
+           
+           return redirect(url_for('mostrar_formulario_login', error='Credenciales incorrectas'))
+
+        
 @app.route('/exito')
 def exito():
     return 'Inicio de sesión exitoso'
@@ -78,5 +87,4 @@ def exito():
 
 if __name__ == '__main__':
     create_table()
-    app.run(debug=True, port=5000)
-
+    app.run(debug=True)
