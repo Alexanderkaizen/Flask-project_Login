@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingreso al sistema</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style_admin.css') }}">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <style>
+    body {
+      background-color: #fff;
+      color: #c9d1d9;
+      font-family: Arial, sans-serif;
+    }
+    .form_total {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .form_img {
+      width: 200px;
+      margin-bottom: 20px;
+    }
+    .titulo-principal {
+      margin-bottom: 20px;
+
+    }
+    .titulo {
+      font-size: 28px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color:#000;
+    }
+    .formulario {
+      background-color: #fff; /* Cambiado a blanco */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      color:#000;
+    }
+    label {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #30363d;
+      background-color: #f0f6fc; /* Cambiado a blanco */
+      color: #000; /* Cambiado a negro */
+      font-size: 16px;
+    }
+    input[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      background-color: #238636;
+      color: #f0f6fc;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    input[type="submit"]:hover {
+      background-color: #2ea043;
+    }
+    .error-message {
+      color: #ff6b6b;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form_total">
+  <img src="../static/img/Logo_admin1.png" class="form_img" alt="">
+  <div class="titulo-principal">
+    <h1 class="titulo">Administrador</h1>
+  </div>
+  <div class="formulario">
+    <form action="/admin" method="post">
+      <label for="fullname">Nombre:</label><br>
+      <input type="text" id="name_admin" name="name_admin"><br>
+      <label for="password">Contraseña:</label><br>
+      <input type="password" id="password_admin" name="password_admin"><br><br>
+      <input class="acessar" type="submit" value="Acceder">
+    </form>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const error = urlParams.get('error');
+      if (error) {
+        alert("Error: " + error);
+      }
+    </script>
+  </div>
+</div>
+
+</body>
+</html>

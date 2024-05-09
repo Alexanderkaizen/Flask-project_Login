@@ -9,7 +9,7 @@ def connect_db():
     conn.row_factory = sqlite3.Row
     return conn
 
-# Función para crear la base de datos
+# Función para crear la base de datos 
 def create_table():
     conn = connect_db()
     cursor = conn.cursor()
@@ -19,39 +19,43 @@ def create_table():
                         email TEXT,
                         contraseña TEXT
                     )''')
+    
+    cursor.execute(''' CREATE TABLE IF NOT EXISTS admin(
+        id INTEGER PRIMARY KEY,
+        nombre_admin TEXT,
+        contraseña_admin TEXT
+    )      
+                   ''')
+    
+    
     conn.commit()
     conn.close()
+    
+    
 
-# Ruta para mostrar el formulario de registro
-@app.route("/")
+
+
+@app.route("/") #Formulario para acceder al login y registro
 def index():
-    return render_template("index.html")
+    return render_template("admin.html")
 
-@app.route('/register')
-def mostrar_formulario_registro():
-    return render_template('registro.html')
-
-@app.route('/registro', methods=['POST'])
-def agregar_registro():
-    if request.method == 'POST':
-        nombre = request.form['fullname']
-        email = request.form['email']
-        contraseña = request.form['password']
+@app.route('/admin', methods=['POST']) 
+def admin():
+    if request.method == 'POST':    
+        nombre = request.form['name_admin']
+        contraseña = request.form['password_admin']
 
         conn = connect_db()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM usuarios WHERE nombre = ? AND email = ? AND contraseña = ?", (nombre, email, contraseña))
-        validacion = cursor.fetchone()
+        cursor.execute('SELECT * FROM admin WHERE nombre_admin = ? AND contraseña_admin = ?', (nombre, contraseña))
+        usuario = cursor.fetchone()
+        conn.close()
 
-        if validacion:
-         return redirect(url_for("mostrar_formulario_registro", error= "Esta cuenta ya se encuentra"))
+        if usuario:
+            return redirect(url_for('mostrar_formulario_login'))
         else:
-            cursor.execute("INSERT INTO usuarios (nombre, email, contraseña) VALUES (?,?,?)", [nombre, email, contraseña])
-            conn.commit()
-            conn.close()
-
-        return redirect(url_for('mostrar_formulario_login'))
-
+           return redirect(url_for('index', error='Credenciales incorrectas'))
+       
 
     
     
@@ -69,7 +73,7 @@ def iniciar_sesion():
 
         conn = connect_db()
         cursor = conn.cursor()
-        cursor.execute('''SELECT * FROM usuarios WHERE nombre = ? AND contraseña = ?''', (nombre, contraseña))
+        cursor.execute('SELECT * FROM usuarios WHERE nombre = ? AND contraseña = ?', (nombre, contraseña))
         usuario = cursor.fetchone()
         conn.close()
 
@@ -78,6 +82,50 @@ def iniciar_sesion():
         else:
            
            return redirect(url_for('mostrar_formulario_login', error='Credenciales incorrectas'))
+
+
+
+
+
+@app.route('/register') #Registor
+def mostrar_formulario_registro():
+    return render_template('registro.html')
+
+@app.route('/registro', methods=['POST'])
+def agregar_registro():
+    if request.method == 'POST':
+        nombre = request.form['fullname']
+        email = request.form['email']
+        contraseña = request.form['password']
+
+        conn = connect_db()
+        cursor = conn.cursor()
+        
+        cursor.execute("SELECT * FROM usuarios WHERE nombre = ?", (nombre,))
+        validacion1 = cursor.fetchone()
+        
+        if validacion1:
+            return redirect(url_for("mostrar_formulario_registro", error= "Este nombre ya esta registrado"))
+        else:
+            cursor.execute("SELECT * FROM usuarios WHERE email = ?", (email,))
+            validacion2 = cursor.fetchone()
+            if validacion2:
+                return redirect(url_for("mostrar_formulario_registro", error= "Este email ya esta registrado"))
+            else:
+                cursor.execute("SELECT * FROM usuarios WHERE nombre = ? AND email = ? AND contraseña = ?", (nombre, email, contraseña))
+                validacion3 = cursor.fetchone()
+                if validacion3:
+                    return redirect(url_for("mostrar_formulario_registro", error= "Esta cuenta ya se encuentra"))
+
+                else:
+                    cursor.execute("INSERT INTO usuarios (nombre, email, contraseña) VALUES (?,?,?)", [nombre, email, contraseña])
+                    conn.commit()
+                    conn.close()           
+                    return redirect(url_for('mostrar_formulario_login'))
+
+
+
+
 
         
 @app.route('/exito')

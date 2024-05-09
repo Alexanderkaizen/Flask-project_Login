@@ -1,0 +1,46 @@
+/* Estilos específicos para el formulario de login */
+
+.form-total {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.form-img {
+  max-width: 200px; /* Ajusta el tamaño según necesites */
+  margin-bottom: 20px;
+}
+
+.formulario {
+  margin-top: 20px;
+}
+
+.formulario form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formulario label {
+  margin-bottom: 10px;
+}
+
+.formulario input {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.acessar {
+  padding: 10px 20px;
+  background-color: #007bff; /* Color del botón */
+  color: #fff; /* Color del texto */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.acessar:hover {
+  background-color: #0056b3; /* Cambia el color al pasar el mouse */
+}
